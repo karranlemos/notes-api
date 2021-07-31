@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 export default class NotesController {
   public constructor() {
@@ -10,29 +10,29 @@ export default class NotesController {
 
   public async getNotes(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<Response> {
-    return response.send("get");
+    return response.send('get');
   }
 
   public async createNotes(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<Response> {
-    return response.send("create");
+    return response.send('create');
   }
 
   public async updateNote(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<Response> {
-    return response.send("update");
+    return response.send('update');
   }
 
   public async deleteNote(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<Response> {
-    return response.send("delete");
+    return response.send('delete');
   }
 }

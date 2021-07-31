@@ -1,6 +1,6 @@
-import express, { Application } from "express";
+import express, { Application } from 'express';
 
-import routes from "./routes";
+import routes from './routes';
 
 const PORT = 3667;
 

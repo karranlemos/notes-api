@@ -1,3 +1,3 @@
-import NotesController from "./NotesController";
+import NotesController from './NotesController';
 
 export const notesController = new NotesController();
