@@ -7,7 +7,7 @@ const routes: Router = Router();
 routes.get("/notes", notesController.getNotes);
 routes.post("/notes", notesController.createNotes);
 
-routes.put("/note/:id", notesController.updateNote);
-routes.delete("/note/:id", notesController.deleteNote);
+routes.put("/notes/:id", notesController.updateNote);
+routes.delete("/notes/:id", notesController.deleteNote);
 
 export default routes;
