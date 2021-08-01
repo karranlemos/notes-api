@@ -28,6 +28,8 @@
     "no-continue": "off",
     "nonblock-statement-body-position": "off",
     "curly": "off",
+    "semi": "off",
+    "@typescript-eslint/semi": ["error"],
 
     "camelcase": "off",
     "import/no-unresolved": "error",

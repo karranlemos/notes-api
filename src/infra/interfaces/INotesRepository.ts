@@ -5,7 +5,7 @@ export interface INote {
 }
 
 export interface INotesFilter {
-  id?: number | null;
+  ids?: number[] | null;
   title?: string | null;
   description?: string | null;
 }
@@ -26,4 +26,4 @@ export default interface INotesRepository {
   createNotes(notes: INotesCreate[]): Promise<INote[]>;
   updateNotes(notes: INotesUpdate[]): Promise<number>;
   deleteNotes(noteIds: number[]): Promise<number>;
-};
+}

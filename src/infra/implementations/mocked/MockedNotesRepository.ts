@@ -10,12 +10,12 @@ import INotesRepository, {
 
 export default class MockedNotesRepository implements INotesRepository {
   async getNotes({
-    id = null,
+    ids = null,
     title = null,
     description = null,
   }: INotesFilter = {}): Promise<INote[]> {
     const filteredNotes = Object.values(mockedDatabase).filter((note) => {
-      if (id !== null && note.id === id) {
+      if (Array.isArray(ids) && ids.includes(note.id)) {
         return true;
       }
 
