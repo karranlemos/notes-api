@@ -1,8 +1,14 @@
 import { Request, Response } from 'express';
 
 import codes from '../../app/constants/codes';
-import INotesRepository, { INotesFilter } from '../../infra/interfaces/INotesRepository';
-import { validateGetNotesQuery } from './validators';
+import INotesRepository, {
+  INotesFilter,
+  INotesCreate,
+} from '../../infra/interfaces/INotesRepository';
+import {
+  validateGetNotesQuery,
+  validateCreateNotesBody,
+} from './validators';
 
 export default class NotesController {
   public constructor(
@@ -42,7 +48,24 @@ export default class NotesController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    return response.send('create');
+    try {
+      const notesToCreate: INotesCreate[] = validateCreateNotesBody(request.body);
+      const notesCreated = await this.notesRepository.createNotes(notesToCreate);
+
+      return response.status(200).json(notesCreated);
+    } catch (error) {
+      switch (error?.getCode()) {
+        case codes.INVALID_PARAMS:
+          return response.status(400).json({
+            code: error.getCode(),
+            message: error.message,
+          });
+        default:
+          break;
+      }
+
+      return response.status(500).send();
+    }
   }
 
   public async updateNote(

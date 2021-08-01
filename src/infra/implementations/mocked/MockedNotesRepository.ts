@@ -41,8 +41,8 @@ export default class MockedNotesRepository implements INotesRepository {
 
     for (const note of notes) {
       const newRow = {
-        ...note,
         id: nextId,
+        ...note,
       };
       newRows.push(newRow);
       mockedDatabase[nextId] = newRow;
