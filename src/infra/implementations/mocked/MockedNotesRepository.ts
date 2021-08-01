@@ -15,22 +15,22 @@ export default class MockedNotesRepository implements INotesRepository {
     description = null,
   }: INotesFilter = {}): Promise<INote[]> {
     const filteredNotes = Object.values(mockedDatabase).filter((note) => {
-      if (Array.isArray(ids) && ids.includes(note.id)) {
-        return true;
+      if (Array.isArray(ids) && !ids.includes(note.id)) {
+        return false;
       }
 
-      if (title !== null && new RegExp(title, 'i').test(note.title)) {
-        return true;
+      if (title !== null && !new RegExp(title, 'i').test(note.title)) {
+        return false;
       }
 
       if (
         description !== null
-        && new RegExp(description, 'i').test(note.description)
+        && !new RegExp(description, 'i').test(note.description)
       ) {
-        return true;
+        return false;
       }
 
-      return false;
+      return true;
     });
 
     return cloneDeep(filteredNotes);
@@ -90,5 +90,16 @@ export default class MockedNotesRepository implements INotesRepository {
   }
 }
 
-let nextId = 0;
-const mockedDatabase: IObjectOfType<INote> = {};
+let nextId = 3;
+const mockedDatabase: IObjectOfType<INote> = {
+  1: {
+    id: 1,
+    title: 'TODO',
+    description: '1. Fazer as compras.\n2. Fazer faxina.',
+  },
+  2: {
+    id: 2,
+    title: 'Dados do Dia',
+    description: 'Dados sobre alguma coisa.',
+  },
+};

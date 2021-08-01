@@ -19,17 +19,10 @@ export default class NotesController {
     response: Response,
   ): Promise<Response> {
     try {
-      const {
-        ids,
-        title,
-        description,
-      }: INotesFilter = validateGetNotesQuery(request.query);
+      const notesFilter: INotesFilter = validateGetNotesQuery(request.query);
+      const notesFetched = await this.notesRepository.getNotes(notesFilter);
 
-      return response.status(200).json({
-        ids,
-        title,
-        description,
-      });
+      return response.status(200).json(notesFetched);
     } catch (error) {
       switch (error?.getCode()) {
         case codes.INVALID_PARAMS:
