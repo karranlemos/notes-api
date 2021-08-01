@@ -10,6 +10,7 @@ import {
   validateGetNotesQuery,
   validateCreateNotesBody,
   validateUpdateNotesBody,
+  validateDeleteNotesBody,
 } from './validators';
 
 export default class NotesController {
@@ -100,6 +101,25 @@ export default class NotesController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    return response.send('delete');
+    try {
+      const idsNotesToDelete: number[] = validateDeleteNotesBody(request.body);
+      const numberNotesDeleted = await this.notesRepository.deleteNotes(idsNotesToDelete);
+
+      return response.status(200).json({
+        notes_deleted: numberNotesDeleted,
+      });
+    } catch (error) {
+      switch (error?.getCode()) {
+        case codes.INVALID_PARAMS:
+          return response.status(400).json({
+            code: error.getCode(),
+            message: error.message,
+          });
+        default:
+          break;
+      }
+
+      return response.status(500).send();
+    }
   }
 }
