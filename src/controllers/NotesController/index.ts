@@ -4,10 +4,12 @@ import codes from '../../app/constants/codes';
 import INotesRepository, {
   INotesFilter,
   INotesCreate,
+  INotesUpdate,
 } from '../../infra/interfaces/INotesRepository';
 import {
   validateGetNotesQuery,
   validateCreateNotesBody,
+  validateUpdateNotesBody,
 } from './validators';
 
 export default class NotesController {
@@ -72,7 +74,26 @@ export default class NotesController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    return response.send('update');
+    try {
+      const notesToUpdate: INotesUpdate[] = validateUpdateNotesBody(request.body);
+      const numberNotesUpdated = await this.notesRepository.updateNotes(notesToUpdate);
+
+      return response.status(200).json({
+        notes_updated: numberNotesUpdated,
+      });
+    } catch (error) {
+      switch (error?.getCode()) {
+        case codes.INVALID_PARAMS:
+          return response.status(400).json({
+            code: error.getCode(),
+            message: error.message,
+          });
+        default:
+          break;
+      }
+
+      return response.status(500).send();
+    }
   }
 
   public async deleteNote(
