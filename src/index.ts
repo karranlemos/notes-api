@@ -3,7 +3,7 @@ import express, { Application } from 'express';
 
 import routes from './routes';
 
-const PORT = 3667;
+const PORT = process.env.PORT || 3667;
 
 const app: Application = express();
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn src/index.ts",
+    "dev": "env-cmd ts-node-dev --transpile-only --ignore-watch node_modules --respawn src/index.ts",
     "build": "tsc -p ."
   },
   "keywords": [],
@@ -26,6 +26,7 @@
     "@types/node": "^16.4.8",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
+    "env-cmd": "^10.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-typescript": "^2.4.0",
